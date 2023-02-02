@@ -1,0 +1,38 @@
+# Brandon Childers - bchil12@wgu.edu - studentid: 000579383
+
+---
+driver:
+  # setup to utilize vagrant, and customize the memory allocation per vm.
+  name: vagrant
+  customize:
+    memory: 512
+
+provisioner:
+  # configure provisioner for local host use case.
+  name: chef_zero
+
+
+verifier:
+  # configure to use inspect to validate tests.
+  name: inspec
+
+platforms:
+  # configure os platforms to use for suites.
+  - name: centos-7
+
+suites:
+  # defines each host
+  - name: Satellite Terminal Server
+    driver:
+      vm_hostname: sat-term-srv.sadinc.com
+  - name: Master Time Server
+    driver:
+      vm_hostname: sat-time-srv.sadinc.com
+  - name: Web Server
+    driver:
+      vm_hostname: sat-web-srv.sadinc.com
+    run_list:
+      - recipe[cookbooks::web]
+  - name: Database Server
+    driver:
+      vm_hostname: sat-db-srv.sadinc.com
